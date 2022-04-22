@@ -2,10 +2,7 @@ package kommando
 
 type KommandoConfig struct {
 	AppName, Template, CommandListTemplate, CommandHelpTemplate, FlagListTemplate string
-}
-type KommandoApp struct {
-	KommandoConfig
-	Commands []Command
+	Commands                                                                      []Command
 }
 
 // Command Types
