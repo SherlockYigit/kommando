@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func NewKommando(KommandoConf KommandoConfig) {
+func NewKommando(KommandoConf KommandoConfig) KommandoApp {
 	append(KommandoConf.Commands, Command{
 		Name:        "help",
 		Description: "Basic helper command where you can get information about commands.",
@@ -19,11 +19,14 @@ func NewKommando(KommandoConf KommandoConfig) {
 				if val.Name == commandName {
 					var flaglist []string
 
-					for _, flagVal := range val.Flags {
-						var flag string = strings.Replace(KommandoConf.FlagListTemplate, "{FlagName}", flagVal.name, -1)
-						flag = strings.Replace(flag, "{FlagDescription}", flagVal.description, -1)
+					if len(val.Flags) > 0 {
 
-						append(flaglist, flag)
+						for _, flagVal := range val.Flags {
+							var flag string = strings.Replace(KommandoConf.FlagListTemplate, "{FlagName}", flagVal.Name, -1)
+							flag = strings.Replace(flag, "{FlagDescription}", flagVal.Description, -1)
+
+							append(flaglist, flag)
+						}
 					}
 
 					var helpMessage string = strings.Replace(KommandoConf.CommandHelpTemplate, "{CommandName}", commandName, -1)
@@ -55,7 +58,16 @@ func NewKommando(KommandoConf KommandoConfig) {
 
 	for _, cmd := range KommandoConf.Commands {
 		if cmd.Name == args[0] {
-			cmd.Execute()
+			cmd.Execute(CommandResponse{
+				Command: cmd,
+			})
 		}
+	}
+
+	return KommandoApp{
+		KommandoConfig: KommandoConf,
+		AddCommand: func(cmd Command) {
+			append(KommandoConf.Commands, cmd)
+		},
 	}
 }
