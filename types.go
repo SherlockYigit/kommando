@@ -8,6 +8,7 @@ type KommandoConfig struct {
 type KommandoApp struct {
 	KommandoConfig
 	AddCommand func(cmd Command)
+	Run        func()
 }
 
 // Command Types
