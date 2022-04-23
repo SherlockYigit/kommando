@@ -10,7 +10,7 @@ func NewKommando(KommandoConf KommandoConfig) KommandoApp {
 	append(KommandoConf.Commands, Command{
 		Name:        "help",
 		Description: "Basic helper command where you can get information about commands.",
-		Execute: func(Res *CommandResponse) {
+		Execute: func(Res CommandResponse) {
 			args := os.Args[1:]
 
 			commandName := args[1]
@@ -25,7 +25,7 @@ func NewKommando(KommandoConf KommandoConfig) KommandoApp {
 							var flag string = strings.Replace(KommandoConf.FlagListTemplate, "{FlagName}", flagVal.Name, -1)
 							flag = strings.Replace(flag, "{FlagDescription}", flagVal.Description, -1)
 
-							append(flaglist, flag)
+							flaglist = append(flaglist, flag)
 						}
 					}
 
@@ -41,15 +41,15 @@ func NewKommando(KommandoConf KommandoConfig) KommandoApp {
 
 	var logmsgCommands []string
 
-	for _, val := range app.Commands {
+	for _, val := range KommandoConf.Commands {
 		var command string = strings.Replace(KommandoConf.CommandListTemplate, "{CommandName}", val.Name, -1)
 		command = strings.Replace(command, "{CommandDescription}", val.Description, -1)
 
-		append(logmsgCommands, command)
+		logmsgCommands = append(logmsgCommands, command)
 	}
 
 	var logmsg string = strings.Replace(KommandoConf.Template, "{AppName}", KommandoConf.AppName, -1)
-	logmsg = strings.Replace(logmsg, "{CommandList}", strings.Join(logMsgCommands, "\n"), -1)
+	logmsg = strings.Replace(logmsg, "{CommandList}", strings.Join(logmsgCommands, "\n"), -1)
 
 	fmt.Println(logmsg)
 
