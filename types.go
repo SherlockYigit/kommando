@@ -28,5 +28,5 @@ type Command struct {
 	Name, Description string
 	Aliases           []string
 	Flags             []Flag
-	Execute           func(Res *CommandResponse)
+	Execute           func(Res CommandResponse)
 }
