@@ -26,7 +26,7 @@ func main() {
 	handler.AddCommand(kommando.Command{
 		Name:        "test",
 		Description: "This is a test command.",
-		Execute: func(Res *kommando.CommandResponse) {
+		Execute: func(Res kommando.CommandResponse) {
 			fmt.Println("Hello world!")
 		},
 	})
