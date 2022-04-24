@@ -5,12 +5,6 @@ type KommandoConfig struct {
 	Commands                                                                      []Command
 }
 
-type KommandoApp struct {
-	KommandoConfig
-	AddCommand func(cmd Command)
-	Run        func()
-}
-
 // Command Types
 
 type Flag struct {
