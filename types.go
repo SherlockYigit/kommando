@@ -11,13 +11,9 @@ type Flag struct {
 	Name, Description string
 	RequiredValue     bool
 }
-type SelectedFlag struct {
-	Flag
-	Value string
-}
 type CommandResponse struct {
 	Command
-	SelectedFlags []SelectedFlag
+	Args []string
 }
 type Command struct {
 	Name, Description string

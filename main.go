@@ -6,6 +6,31 @@ import (
 	"strings"
 )
 
+func parseArgs(args []string) []string {
+	var out []string
+
+	for i := 0; len(args) > i; i++ {
+		val := args[i]
+
+		if strings.Contains(val, "--") && strings.Contains(val, "=") {
+			out = append(out, strings.Split(val, "--")[1])
+		} else if strings.Contains(val, "--") {
+			if len(args)-1 == i {
+				out = append(out, fmt.Sprintf("%s=nil", strings.Contains(val, "--")))
+			} else {
+				var str string = strings.Split(val, "--")[1]
+				str = fmt.Sprintf("%s=%s", str, args[i+1])
+
+				out = append(out, str)
+			}
+		} else if i > 0 && !strings.Contains(args[i-1], "--") {
+			out = append(out, val)
+		}
+	}
+
+	return out
+}
+
 func (KommandoConf *KommandoConfig) AddCommand(cmd Command) {
 	KommandoConf.Commands = append(KommandoConf.Commands, cmd)
 }
@@ -74,11 +99,19 @@ func (KommandoConf *KommandoConfig) Run() {
 	if len(args) > 0 {
 		for i := 0; i < len(KommandoConf.Commands); i++ {
 			cmd := KommandoConf.Commands[i]
+			var cmdargs []string = args[1:]
 
 			if cmd.Name == args[0] {
-				cmd.Execute(CommandResponse{
-					Command: cmd,
-				})
+				if len(cmdargs) > 0 {
+					cmd.Execute(CommandResponse{
+						Command: cmd,
+						Args:    parseArgs(cmdargs),
+					})
+				} else {
+					cmd.Execute(CommandResponse{
+						Command: cmd,
+					})
+				}
 			}
 		}
 	} else {
