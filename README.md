@@ -1,5 +1,7 @@
 # Kommando
 
+![go-stat](https://goreportcard.com/report/github.com/SherlockYigit/kommando)
+
 Simple and usable cli tool for go lang.
 
 ## Installation
