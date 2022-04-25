@@ -23,7 +23,7 @@ func parseArgs(args []string) []string {
 
 				out = append(out, str)
 			}
-		} else if i > 0 && !strings.Contains(args[i-1], "--") {
+		} else if i == 0 || i > 0 && !strings.Contains(args[i-1], "--") {
 			out = append(out, val)
 		}
 	}
