@@ -1,6 +1,4 @@
-# Kommando
-
-![go-stat](https://goreportcard.com/report/github.com/SherlockYigit/kommando)
+# Kommando [![Go Report Card](https://goreportcard.com/badge/github.com/SherlockYigit/kommando)](https://goreportcard.com/report/github.com/SherlockYigit/kommando)
 
 Simple and usable cli tool for go lang.
 
